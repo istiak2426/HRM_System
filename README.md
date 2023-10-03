@@ -12,14 +12,56 @@ USE databasename;
 ## Create employees Table
 
 ```
-CREATE TABLE employees (
-  id INT NOT NULL,
-  firstName VARCHAR(255) NULL,
-  lastName VARCHAR(255) NULL,
-  age INT NULL,
-  sex VARCHAR(1) NULL,
-  phoneNumber VARCHAR(255) NULL,
-  PRIMARY KEY (id)
+
+-- Create the Company table
+CREATE TABLE Company (
+    CompanyID INT AUTO_INCREMENT PRIMARY KEY,
+    CompanyName VARCHAR(255) NOT NULL,
+    FoundedDate DATE,
+    Address VARCHAR(255)
+   
+);
+
+-- Create the Department table
+CREATE TABLE Department (
+    DepartmentID INT AUTO_INCREMENT PRIMARY KEY,
+    CompanyID INT,
+    DepartmentName VARCHAR(255) NOT NULL,
+    ManagerID INT,
+    FOREIGN KEY (CompanyID) REFERENCES Company(CompanyID)
+ 
+);
+
+-- Create the Designation table
+CREATE TABLE Designation (
+    DesignationID INT AUTO_INCREMENT PRIMARY KEY,
+    DesignationName VARCHAR(255) NOT NULL,
+
+);
+
+-- Create the Employee table
+CREATE TABLE Employee (
+    EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
+    CompanyID INT,
+    DepartmentID INT,
+    DesignationID INT,
+    FirstName VARCHAR(255) NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    DateOfBirth DATE,
+    FOREIGN KEY (CompanyID) REFERENCES Company(CompanyID),
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID),
+    FOREIGN KEY (DesignationID) REFERENCES Designation(DesignationID)
+   
+);
+
+-- Create the Increment table
+CREATE TABLE Increment (
+    IncrementID INT AUTO_INCREMENT PRIMARY KEY,
+    EmployeeID INT,
+    IncrementDate DATE,
+    IncrementAmount DECIMAL(10,2),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
+
 );
 ```
 
